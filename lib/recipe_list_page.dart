@@ -12,51 +12,29 @@ class _RecipeListPageState extends State<RecipeListPage> {
   final MealService _mealService = MealService();
   List<Meal> _meals = [];
   String _selectedCategory = 'Beef'; // Categoría predeterminada
-  List<String> _areas = ['Any']; // Áreas (países) disponibles
-  String _selectedArea = 'Any'; // Área (país) predeterminado
 
   @override
   void initState() {
     super.initState();
     _loadMeals();
-    _loadAreas();
   }
 
   void _loadMeals() async {
     try {
-      List<Meal> meals = await _mealService.getMealsByCategoryAndArea(
+      List<Meal> meals = await _mealService.getMealsByCategory(
         category: _selectedCategory,
-        area: _selectedArea,
       );
       setState(() {
         _meals = meals;
       });
     } catch (e) {
-      print('Error al cargar las meals: $e');
-    }
-  }
-
-  void _loadAreas() async {
-    try {
-      List<String> areas = await _mealService.getAreasList();
-      setState(() {
-        _areas = ['Any', ...areas];
-      });
-    } catch (e) {
-      print('Error al cargar las áreas: $e');
+      print('Error loading meals: $e');
     }
   }
 
   void _filterByCategory(String category) {
     setState(() {
       _selectedCategory = category;
-      _loadMeals();
-    });
-  }
-
-  void _filterByArea(String area) {
-    setState(() {
-      _selectedArea = area;
       _loadMeals();
     });
   }
@@ -83,20 +61,6 @@ class _RecipeListPageState extends State<RecipeListPage> {
               }
             },
           ),
-          DropdownButton<String>(
-            value: _selectedArea,
-            items: _areas.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                _filterByArea(newValue);
-              }
-            },
-          ),
           _meals.isNotEmpty
               ? Expanded(
                   child: ListView.builder(
@@ -110,7 +74,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
                     },
                   ),
                 )
-              : const Text('No se encontraron recetas.'),
+              : const Text('No recipes found.'),
         ],
       ),
     );

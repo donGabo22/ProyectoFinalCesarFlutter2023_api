@@ -20,10 +20,8 @@ class Meal {
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) {
-    // La propiedad 'strIngredient' en la API contiene una lista de ingredientes.
-    // Vamos a extraer los ingredientes de la respuesta JSON.
     final ingredients = List<String>.generate(
-      20, // Número de ingredientes máximo que se pueden proporcionar en la API.
+      20,
       (index) => json['strIngredient${index + 1}'] ?? '',
     ).where((ingredient) => ingredient.isNotEmpty).toList();
 
