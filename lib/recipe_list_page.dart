@@ -48,7 +48,6 @@
 //     );
 //   }
 // }
-
 import 'package:flutter/material.dart';
 import 'package:bbq_api/models/meal.dart';
 import 'package:bbq_api/services/meal_service.dart';
@@ -71,8 +70,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
 
   void _loadMeals() async {
     try {
-      List<Meal> meals =
-          await _mealService.getMealsByCategory(_selectedCategory);
+      List<Meal> meals = await _mealService.getMealsByCategory(_selectedCategory);
       setState(() {
         _meals = meals;
       });
@@ -98,12 +96,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
           // Agregamos un botón para filtrar por categoría
           DropdownButton<String>(
             value: _selectedCategory,
-            items: <String>[
-              'Beef',
-              'Chicken',
-              'Dessert',
-              'Seafood'
-            ] // Puedes agregar más categorías
+            items: <String>['Beef', 'Chicken', 'Dessert','Seafood'] // Puedes agregar más categorías
                 .map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
