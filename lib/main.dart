@@ -1,6 +1,8 @@
 // import 'package:bbq_api/recipe_list_page.dart';
 // import 'package:flutter/material.dart';
 
+// // main.dart
+
 // void main() => runApp(const NavigationBarApp());
 
 // class NavigationBarApp extends StatelessWidget {
@@ -57,7 +59,7 @@
 //           child: const Text(
 //               'Page 1: Aquí debería abrir la página principal con un cardsweeper con una receta del día'),
 //         ),
-//         RecipeListPage(),
+//         RecipeListPageWithFilters(), // Página 2 con el menú desplegable de área (país)
 //         Container(
 //           color: Colors.blue,
 //           alignment: Alignment.center,
@@ -69,8 +71,7 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:bbq_api/models/meal.dart';
-import 'package:bbq_api/services/meal_service.dart';
+import 'package:bbq_api/recipe_list_page.dart';
 
 void main() => runApp(const NavigationBarApp());
 
@@ -127,7 +128,11 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: const Text('Page 1: Aquí debería abrir la página principal con un cardsweeper con una receta del día'),
         ),
-        RecipeListPage(), // La página 2 muestra la lista de recetas
+        Container(
+          color: Colors.green,
+          alignment: Alignment.center,
+          child: RecipeListPage(), // Usando la clase RecipeListPage
+        ),
         Container(
           color: Colors.blue,
           alignment: Alignment.center,
@@ -137,85 +142,4 @@ class _NavigationExampleState extends State<NavigationExample> {
     );
   }
 }
-
-class RecipeListPage extends StatefulWidget {
-  @override
-  _RecipeListPageState createState() => _RecipeListPageState();
-}
-
-class _RecipeListPageState extends State<RecipeListPage> {
-  final MealService _mealService = MealService();
-  List<Meal> _meals = [];
-  String _selectedCategory = 'Beef'; // Categoría predeterminada
-
-  @override
-  void initState() {
-    super.initState();
-    _loadMeals();
-  }
-
-  void _loadMeals() async {
-    try {
-      List<Meal> meals = await _mealService.getMealsByCategory(_selectedCategory);
-      setState(() {
-        _meals = meals;
-      });
-    } catch (e) {
-      print('Error al cargar las meals: $e');
-    }
-  }
-
-  void _filterByCategory(String category) {
-    setState(() {
-      _selectedCategory = category;
-      _loadMeals();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
-      alignment: Alignment.center,
-      child: Column(
-        children: [
-          // Agregamos un botón para filtrar por categoría
-          DropdownButton<String>(
-            value: _selectedCategory,
-            items: <String>['Beef', 'Chicken', 'Dessert','Seafood'] // Puedes agregar más categorías
-                .map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                _filterByCategory(newValue);
-              }
-            },
-          ),
-          _meals.isNotEmpty
-              ? Expanded(
-                  child: ListView.builder(
-                    itemCount: _meals.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_meals[index].title),
-                        subtitle: Text(_meals[index].category),
-                        leading: Image.network(_meals[index].thumbnail),
-                      );
-                    },
-                  ),
-                )
-              : const Text('No se encontraron recetas.'),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-
 
