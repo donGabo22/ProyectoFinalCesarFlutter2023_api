@@ -1,6 +1,8 @@
-// main.dart
+import 'package:bbq_api/card_swiper.dart';
 import 'package:bbq_api/recipe_list_page.dart';
 import 'package:flutter/material.dart';
+import 'package:bbq_api/services/meal_service.dart';
+import 'package:bbq_api/models/meal.dart';
 
 void main() => runApp(const NavigationBarApp());
 
@@ -9,7 +11,10 @@ class NavigationBarApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: NavigationExample());
+    return MaterialApp(
+      home: const NavigationExample(),
+      debugShowCheckedModeBanner: false, // Oculta el banner de debug
+    );
   }
 }
 
@@ -22,6 +27,25 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
+  MealService _mealService = MealService();
+  List<Meal> _randomMeals = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRandomMeals();
+  }
+
+  void _loadRandomMeals() async {
+    try {
+      List<Meal> allMeals = await _mealService.getAllMeals();
+      setState(() {
+        _randomMeals = allMeals;
+      });
+    } catch (e) {
+      print('Error loading all meals: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +76,28 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
+        // Página Principal (Index 0)
         Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: const Text(
-              'Page 1: Aquí debería abrir la página principal con un cardsweeper con una receta del día'),
+          color: Colors.green,
+          alignment: Alignment.center, // Centro vertical y horizontal
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                '¡Bienvenido!',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20.0),
+              CardSwiper(meals: _randomMeals),
+            ],
+          ),
         ),
-        RecipeListPage(), //pag 2
+      
+        // Página de Recetas (Index 1)
+        RecipeListPage(),
         Container(
           color: Colors.blue,
           alignment: Alignment.center,
