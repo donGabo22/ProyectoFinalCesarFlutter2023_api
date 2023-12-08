@@ -1,4 +1,4 @@
-import 'package:bbq_api/recipe_detail_screen.dart';
+import 'package:bbq_api/screens/recipe_detail_screen.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:bbq_api/models/meal.dart';

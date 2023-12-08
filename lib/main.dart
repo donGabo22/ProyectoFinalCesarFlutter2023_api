@@ -1,10 +1,9 @@
 // main.dart
-import 'package:bbq_api/card_swiper.dart';
-import 'package:bbq_api/recipe_list_page.dart';
+import 'package:bbq_api/widgets/card_swiper.dart';
+import 'package:bbq_api/screens/recipe_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bbq_api/services/meal_service.dart';
 import 'package:bbq_api/models/meal.dart';
-
 void main() => runApp(const NavigationBarApp());
 
 class NavigationBarApp extends StatelessWidget {
@@ -20,22 +19,18 @@ class NavigationBarApp extends StatelessWidget {
 }
 class NavigationExample extends StatefulWidget {
   const NavigationExample({Key? key}) : super(key: key);
-
   @override
   State<NavigationExample> createState() => _NavigationExampleState();
 }
-
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
   MealService _mealService = MealService();
   List<Meal> _randomMeals = [];
-
   @override
   void initState() {
     super.initState();
     _loadRandomMeals();
   }
-
   void _loadRandomMeals() async {
     try {
       List<Meal> allMeals = await _mealService.getAllMeals();
@@ -46,7 +41,6 @@ class _NavigationExampleState extends State<NavigationExample> {
       print('Error loading all meals: $e');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
