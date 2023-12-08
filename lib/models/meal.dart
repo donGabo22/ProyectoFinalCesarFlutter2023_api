@@ -1,4 +1,3 @@
-// lib/models/meal.dart
 
 class Meal {
   final String id;
@@ -19,20 +18,18 @@ class Meal {
     required this.ingredients,
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json) {
-    final ingredients = List<String>.generate(
-      20,
-      (index) => json['strIngredient${index + 1}'] ?? '',
-    ).where((ingredient) => ingredient.isNotEmpty).toList();
-
-    return Meal(
-      id: json['idMeal'] ?? '',
-      title: json['strMeal'] ?? '',
-      category: json['strCategory'] ?? '',
-      area: json['strArea'] ?? '',
-      instructions: json['strInstructions'] ?? '',
-      thumbnail: json['strMealThumb'] ?? '',
-      ingredients: ingredients,
-    );
-  }
+  factory Meal.fromJson(Map<String, dynamic> json) => Meal(
+        id: json['idMeal'] ?? '',
+        title: json['strMeal'] ?? '',
+        category: json['strCategory'] ?? '',
+        area: json['strArea'] ?? '',
+        instructions: json['strInstructions'] ?? '',
+        thumbnail: json['strMealThumb'] ?? '',
+        ingredients: List<String>.from(List.generate(
+          20,
+          (index) => json['strIngredient${index + 1}'] ?? '',
+        ).where((ingredient) => ingredient.isNotEmpty)),
+      );
 }
+
+

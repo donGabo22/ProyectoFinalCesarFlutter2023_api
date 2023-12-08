@@ -1,3 +1,4 @@
+import 'package:bbq_api/recipe_detail_screen.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:bbq_api/models/meal.dart';
@@ -14,18 +15,32 @@ class CardSwiper extends StatelessWidget {
       width: 400,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Column(
-              children: [
-                Image.network(meals[index].thumbnail),
-                Text(meals[index].title),
-              ],
+          return GestureDetector(
+            onTap: () {
+              _navigateToRecipeDetail(context, meals[index]);
+            },
+            child: Card(
+              child: Column(
+                children: [
+                  Image.network(meals[index].thumbnail),
+                  Text(meals[index].title),
+                ],
+              ),
             ),
           );
         },
         itemCount: meals.length,
         viewportFraction: 0.8,
         scale: 0.9,
+      ),
+    );
+  }
+
+  void _navigateToRecipeDetail(BuildContext context, Meal meal) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecipeDetailScreen(meal: meal),
       ),
     );
   }

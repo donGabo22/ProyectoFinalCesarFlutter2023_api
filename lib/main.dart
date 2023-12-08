@@ -1,3 +1,4 @@
+// main.dart
 import 'package:bbq_api/card_swiper.dart';
 import 'package:bbq_api/recipe_list_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class NavigationBarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const NavigationExample(),
-      debugShowCheckedModeBanner: false, // Oculta el banner de debug
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -76,10 +77,9 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body: <Widget>[
-        // Página Principal (Index 0)
         Container(
           color: Colors.green,
-          alignment: Alignment.center, // Centro vertical y horizontal
+          alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -95,8 +95,6 @@ class _NavigationExampleState extends State<NavigationExample> {
             ],
           ),
         ),
-      
-        // Página de Recetas (Index 1)
         RecipeListPage(),
         Container(
           color: Colors.blue,

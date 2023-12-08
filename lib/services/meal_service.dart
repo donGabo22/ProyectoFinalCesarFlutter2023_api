@@ -61,7 +61,6 @@
 //   }
 // }
 
-
 // meal_service.dart
 import 'dart:convert';
 import 'package:bbq_api/models/meal.dart';
@@ -70,7 +69,7 @@ import 'package:http/http.dart' as http;
 class MealService {
   final String apiUrl = 'https://www.themealdb.com/api/json/v1/1/';
 
-  Future<List<Meal>> getMealsByCategory({
+   Future<List<Meal>> getMealsByCategory({
     required String category,
   }) async {
     final response = await http.get(Uri.parse(apiUrl + 'filter.php?c=$category'));
@@ -107,14 +106,16 @@ class MealService {
 
   Future<List<Meal>> getRandomMealsBatch(int count) async {
     try {
-      final response = await http.get(Uri.parse(apiUrl + 'random.php?limit=$count'));
+      final response =
+          await http.get(Uri.parse(apiUrl + 'random.php?limit=$count'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<dynamic> meals = data['meals'];
         return meals.map((meal) => Meal.fromJson(meal)).toList();
       } else {
-        print('Failed to load random meals. Status Code: ${response.statusCode}');
+        print(
+            'Failed to load random meals. Status Code: ${response.statusCode}');
         print('Error body: ${response.body}');
         throw Exception('Failed to load random meals');
       }
@@ -126,30 +127,32 @@ class MealService {
   // meal_service.dart
 // ... (código existente)
 
-Future<List<Meal>> getAllMeals() async {
-  try {
-    final response = await http.get(Uri.parse(apiUrl + 'search.php?s='));
+  Future<List<Meal>> getAllMeals() async {
+    try {
+      final response = await http.get(Uri.parse(apiUrl + 'search.php?s='));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      final List<dynamic> meals = data['meals'];
-      return meals.map((meal) => Meal.fromJson(meal)).toList();
-    } else {
-      print('Failed to load all meals. Status Code: ${response.statusCode}');
-      print('Error body: ${response.body}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<dynamic> meals = data['meals'];
+
+        for (var meal in meals) {
+          print('Meal JSON: $meal');
+        }
+
+        return meals
+            .map((meal) => Meal.fromJson(meal as Map<String, dynamic>))
+            .toList();
+      } else {
+        print('Failed to load all meals. Status Code: ${response.statusCode}');
+        print('Error body: ${response.body}');
+        throw Exception('Failed to load all meals');
+      }
+    } catch (e) {
+      print('Error: $e');
       throw Exception('Failed to load all meals');
     }
-  } catch (e) {
-    print('Error: $e');
-    throw Exception('Failed to load all meals');
   }
+
+
+  
 }
-
-
-
-
-
-
-
-}
-
