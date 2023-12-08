@@ -1,4 +1,4 @@
-
+//meal.dart
 class Meal {
   final String id;
   final String title;

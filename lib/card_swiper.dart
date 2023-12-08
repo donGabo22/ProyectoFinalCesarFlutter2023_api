@@ -9,11 +9,15 @@ class CardSwiper extends StatelessWidget {
   CardSwiper({required this.meals});
 
   @override
+  
   Widget build(BuildContext context) {
+    
     return Container(
       height: 400,
       width: 400,
+      
       child: Swiper(
+        
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {

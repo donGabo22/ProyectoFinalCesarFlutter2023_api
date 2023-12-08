@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:bbq_api/models/meal.dart';
 import 'recipe_detail_screen.dart';
 
-
 class RecipeListPage extends StatefulWidget {
   @override
   _RecipeListPageState createState() => _RecipeListPageState();
@@ -49,12 +48,28 @@ class _RecipeListPageState extends State<RecipeListPage> {
     });
   }
 
+  void _navigateToRecipeDetail(Meal meal) async {
+    try {
+      Meal detailedMeal = await _mealService.getMealById(meal.id);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RecipeDetailScreen(meal: detailedMeal),
+        ),
+      );
+    } catch (e) {
+      print('Error loading meal details: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipe List'),
+        title: Text('Lista de recetas'),
+        backgroundColor: Colors.brown,
       ),
+      backgroundColor: Colors.orange, // Cambia el fondo a naranja aquí
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -97,8 +112,8 @@ class _RecipeListPageState extends State<RecipeListPage> {
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
                               _meals[index].thumbnail,
-                              height: 80.0, // Ajusta la altura según sea necesario
-                              width: 80.0, // Ajusta el ancho según sea necesario
+                              height: 80.0,
+                              width: 80.0,
                             ),
                           ),
                           onTap: () {
@@ -112,15 +127,6 @@ class _RecipeListPageState extends State<RecipeListPage> {
           ],
         ),
       ),
-    );
-  }
-
-  void _navigateToRecipeDetail(Meal meal) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RecipeDetailScreen(meal: meal),
-      ),                                                                                                        
     );
   }
 }

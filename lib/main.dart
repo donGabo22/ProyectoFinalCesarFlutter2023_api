@@ -18,7 +18,6 @@ class NavigationBarApp extends StatelessWidget {
     );
   }
 }
-
 class NavigationExample extends StatefulWidget {
   const NavigationExample({Key? key}) : super(key: key);
 
@@ -70,19 +69,19 @@ class _NavigationExampleState extends State<NavigationExample> {
             label: 'Recetas',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.search),
-            icon: Icon(Icons.school_outlined),
-            label: 'Buscar',
+            selectedIcon: Icon(Icons.favorite_border_outlined),
+            icon: Icon(Icons.favorite),
+            label: 'Favoritos',
           ),
         ],
       ),
       body: <Widget>[
         Container(
-          color: Colors.green,
+          color: Colors.orange,
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: [          
               const Text(
                 '¡Bienvenido!',
                 style: TextStyle(
@@ -97,9 +96,9 @@ class _NavigationExampleState extends State<NavigationExample> {
         ),
         RecipeListPage(),
         Container(
-          color: Colors.blue,
+          color: Colors.orange,
           alignment: Alignment.center,
-          child: const Text('Page 3: Aquí debería abrir un buscador y filtros'),
+          child: const Text('Page 3: Aquí debería consumir las recientes o favoritos  o algo asi'),
         ),
       ][currentPageIndex],
     );
