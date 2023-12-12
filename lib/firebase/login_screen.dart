@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_screen.dart';
 
-
 class LoginScreen extends StatefulWidget {
   final Function(String, String) onAuthenticate;
   final Function(String, String) onRegister;
@@ -19,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, // Fondo naranja
+      backgroundColor: Colors.orange,
       appBar: AppBar(
         title: Text('Iniciar Sesión'),
         backgroundColor: Colors.brown,
@@ -30,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
           margin: EdgeInsets.all(16.0),
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.white, // Fondo blanco
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Column(
@@ -68,15 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Lógica de autenticación aquí
                   widget.onAuthenticate(
                     _emailController.text.trim(),
                     _passwordController.text.trim(),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.brown, // Fondo marrón
-                  onPrimary: Colors.white, // Texto blanco
+                  primary: Colors.brown,
+                  onPrimary: Colors.white,
                 ),
                 child: Text('Iniciar Sesión'),
               ),
@@ -93,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.brown, // Texto marrón
+                  primary: Colors.brown,
                 ),
                 child: Text('Registrarse'),
               ),

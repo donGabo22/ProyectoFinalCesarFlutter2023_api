@@ -1,23 +1,19 @@
-import 'package:bbq_api/card_swiper.dart';
-import 'package:bbq_api/firebase/login_screen.dart';
 import 'package:bbq_api/recipe_list_page.dart';
 import 'package:flutter/material.dart';
-// import 'package:bbq_api/widgets/card_swiper.dart';
-// import 'package:bbq_api/screens/recipe_list_page.dart';
-// import 'package:bbq_api/screens/login_screen.dart';
-// import 'package:bbq_api/screens/register_screen.dart';
-import 'package:bbq_api/services/meal_service.dart';
-import 'package:bbq_api/models/meal.dart';
+import 'package:bbq_api/firebase/login_screen.dart';
 
-void main() => runApp(const NavigationBarApp());
+void main() => runApp(const MyApp());
 
-class NavigationBarApp extends StatelessWidget {
-  const NavigationBarApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const NavigationExample(),
+      home: LoginScreen(
+        onAuthenticate: (String email, String password) {},
+        onRegister: (String email, String password) {},
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -32,25 +28,6 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
-  MealService _mealService = MealService();
-  List<Meal> _randomMeals = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadRandomMeals();
-  }
-
-  void _loadRandomMeals() async {
-    try {
-      List<Meal> allMeals = await _mealService.getAllMeals();
-      setState(() {
-        _randomMeals = allMeals;
-      });
-    } catch (e) {
-      print('Error loading all meals: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +72,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                 ),
               ),
               const SizedBox(height: 20.0),
-              CardSwiper(meals: _randomMeals),
+              // Agrega aquí tu contenido de la pantalla de inicio
             ],
           ),
         ),
@@ -103,18 +80,18 @@ class _NavigationExampleState extends State<NavigationExample> {
         Container(
           color: Colors.orange,
           alignment: Alignment.center,
-          child: const Text('Page 3: Aquí debería consumir las recientes o favoritos o algo así'),
+          child: const Text(
+              'Page 3: Aquí debería consumir las recientes o favoritos o algo así'),
         ),
       ][currentPageIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Muestra la pantalla de inicio de sesión como un diálogo emergente
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return LoginScreen(
-                onAuthenticate: _handleAuthentication,
-                onRegister: _handleRegistration,
+                onAuthenticate: (String email, String password) {},
+                onRegister: (String email, String password) {},
               );
             },
           );
@@ -123,17 +100,5 @@ class _NavigationExampleState extends State<NavigationExample> {
         backgroundColor: Colors.brown,
       ),
     );
-  }
-
-  // Lógica para manejar la autenticación
-  void _handleAuthentication(String email, String password) {
-    // Implementa la lógica de autenticación aquí
-    print('Autenticado con: $email');
-  }
-
-  // Lógica para manejar el registro
-  void _handleRegistration(String email, String password) {
-    // Implementa la lógica de registro aquí
-    print('Registrado con: $email');
   }
 }

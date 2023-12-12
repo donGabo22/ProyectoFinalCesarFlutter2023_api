@@ -16,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, // Fondo naranja
+      backgroundColor: Colors.orange,
       appBar: AppBar(
         title: Text('Registrarse'),
         backgroundColor: Colors.brown,
@@ -33,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           margin: EdgeInsets.all(16.0),
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.white, // Fondo blanco
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Column(
@@ -77,8 +77,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.brown, // Fondo marrón
-                  onPrimary: Colors.white, // Texto blanco
+                  primary: Colors.brown,
+                  onPrimary: Colors.white,
                 ),
                 child: Text('Registrarse'),
               ),
