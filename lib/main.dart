@@ -1,7 +1,11 @@
-// main.dart
 import 'package:bbq_api/card_swiper.dart';
+import 'package:bbq_api/firebase/login_screen.dart';
 import 'package:bbq_api/recipe_list_page.dart';
 import 'package:flutter/material.dart';
+// import 'package:bbq_api/widgets/card_swiper.dart';
+// import 'package:bbq_api/screens/recipe_list_page.dart';
+// import 'package:bbq_api/screens/login_screen.dart';
+// import 'package:bbq_api/screens/register_screen.dart';
 import 'package:bbq_api/services/meal_service.dart';
 import 'package:bbq_api/models/meal.dart';
 
@@ -18,6 +22,7 @@ class NavigationBarApp extends StatelessWidget {
     );
   }
 }
+
 class NavigationExample extends StatefulWidget {
   const NavigationExample({Key? key}) : super(key: key);
 
@@ -81,7 +86,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [          
+            children: [
               const Text(
                 '¡Bienvenido!',
                 style: TextStyle(
@@ -98,9 +103,37 @@ class _NavigationExampleState extends State<NavigationExample> {
         Container(
           color: Colors.orange,
           alignment: Alignment.center,
-          child: const Text('Page 3: Aquí debería consumir las recientes o favoritos  o algo asi'),
+          child: const Text('Page 3: Aquí debería consumir las recientes o favoritos o algo así'),
         ),
       ][currentPageIndex],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Muestra la pantalla de inicio de sesión como un diálogo emergente
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return LoginScreen(
+                onAuthenticate: _handleAuthentication,
+                onRegister: _handleRegistration,
+              );
+            },
+          );
+        },
+        child: Icon(Icons.login),
+        backgroundColor: Colors.brown,
+      ),
     );
+  }
+
+  // Lógica para manejar la autenticación
+  void _handleAuthentication(String email, String password) {
+    // Implementa la lógica de autenticación aquí
+    print('Autenticado con: $email');
+  }
+
+  // Lógica para manejar el registro
+  void _handleRegistration(String email, String password) {
+    // Implementa la lógica de registro aquí
+    print('Registrado con: $email');
   }
 }
